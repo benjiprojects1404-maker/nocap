@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$NOCAP — No lies. No hype. No cap.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0E17;
+    --surface: #161129;
+    --surface-2: #1D1736;
+    --purple: #9B3FE0;
+    --purple-dim: #6B2FA0;
+    --coral: #F2845C;
+    --cyan: #4FCBE8;
+    --hs-pink: #EC4899;
+    --hs-blue: #3B82F6;
+    --text: #F5F2FA;
+    --text-muted: #8B84A3;
+    --border: #2A2444;
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B0E17; --surface: #161129; --surface-2: #1D1736;
+      --text: #F5F2FA; --text-muted: #8B84A3; --border: #2A2444;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B0E17; --surface: #161129; --surface-2: #1D1736;
+    --text: #F5F2FA; --text-muted: #8B84A3; --border: #2A2444;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .mono { font-family: 'IBM Plex Mono', 'Courier New', monospace; }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+  }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
+  section { padding: 96px 0; }
+  @media (max-width: 720px) { section { padding: 64px 0; } }
+
+  .top-banner {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .top-banner-inner {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 28px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .top-banner-inner a { color: var(--cyan); }
+  .beta-tag {
+    flex-shrink: 0;
+    background: var(--coral);
+    color: #2A1608;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 640px) {
+    .top-banner-inner { font-size: 12px; }
+  }
+
+  /* ---------- Nav ---------- */
+  nav.top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 28px; max-width: 1100px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: 'Lora', serif; font-weight: 700; font-size: 26px; letter-spacing: -0.01em; }
+  .brand svg { width: 36px; height: 36px; flex-shrink: 0; }
+  .wordmark {
+    background: linear-gradient(100deg, var(--hs-pink) 0%, var(--hs-blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--hs-pink); /* fallback if background-clip:text unsupported */
+  }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-wallet { display: flex; align-items: center; gap: 8px; }
+  .nav-wallet .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); flex-shrink: 0; }
+  .nav-wallet .dot.off { background: var(--text-muted); box-shadow: none; }
+  @media (max-width: 720px) {
+    .nav-badge-hide-mobile { display: none; }
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--cyan);
+    border: 1px solid var(--cyan); border-radius: 999px;
+    padding: 6px 14px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--purple);
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 12px 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--purple-dim);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--purple-dim); text-decoration: none; }
+  .btn:active { transform: translate(0,0); box-shadow: 2px 2px 0 var(--purple-dim); }
+  .btn-ghost {
+    background: transparent; color: var(--text); border: 1px solid var(--border);
+    box-shadow: none;
+  }
+  .btn-ghost:hover { border-color: var(--purple); transform: none; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav.top { flex-direction: column; gap: 16px; align-items: flex-start; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero { padding-top: 40px; padding-bottom: 80px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 12px; }
+    .hero-mascot { width: 220px; margin: 0 auto; }
+  }
+  .hero-mascot svg { width: 100%; height: auto; max-width: 320px; display: block; margin: 0 auto; }
+  .mascot-float { animation: float 4.5s ease-in-out infinite; transform-origin: center; }
+  .mascot-glint { animation: glint 5s ease-in-out infinite; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(-1.5deg); }
+  }
+  @keyframes glint {
+    0%, 40%, 100% { opacity: 0; transform: translateX(-30px); }
+    50% { opacity: 0.55; transform: translateX(30px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mascot-float { animation: none; }
+    .mascot-glint { animation: none; opacity: 0; }
+  }
+  .hero h1 {
+    font-size: clamp(34px, 5vw, 54px);
+    max-width: 16ch;
+  }
+  .wordmark-inline {
+    background: linear-gradient(100deg, var(--hs-pink) 0%, var(--hs-blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--hs-pink);
+  }
+  .hero .tagline {
+    color: var(--coral);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 19px;
+    margin-top: 18px;
+  }
+  .hero p.desc {
+    color: var(--text-muted);
+    max-width: 52ch;
+    margin-top: 22px;
+    font-size: 16px;
+  }
+  .hero-ctas { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+
+  /* ---------- Stats strip ---------- */
+  .stats {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 0;
+  }
+  .stats-row {
+    display: flex; flex-wrap: wrap; gap: 48px;
+  }
+  .stat { flex: 1 1 140px; min-width: 140px; }
+  .stat .num {
+    font-family: 'Lora', serif; font-weight: 700;
+    font-size: 40px; color: var(--purple);
+  }
+  .stat .label { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
+
+  /* ---------- Section headers ---------- */
+  .section-head { margin-bottom: 40px; max-width: 60ch; }
+  .section-head h2 { font-size: clamp(26px, 3.2vw, 34px); }
+  .section-head p { color: var(--text-muted); margin-top: 12px; font-size: 15px; }
+
+  /* ---------- Tokenomics ---------- */
+  .tokenomics-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+  }
+  @media (max-width: 780px) { .tokenomics-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .stackbar {
+    display: flex; width: 100%; height: 46px; border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .stackbar div { height: 100%; }
+  .alloc-list { display: flex; flex-direction: column; gap: 22px; }
+  .alloc-item { display: flex; gap: 14px; align-items: flex-start; }
+  .swatch { width: 14px; height: 14px; border-radius: 3px; margin-top: 5px; flex-shrink: 0; }
+  .alloc-item h3 { font-size: 16px; font-weight: 600; font-family: 'Inter', sans-serif; }
+  .alloc-item .pct { color: var(--text-muted); font-size: 13px; margin-left: 8px; }
+  .alloc-item p { color: var(--text-muted); font-size: 14px; margin-top: 3px; }
+
+  /* ---------- Vesting timeline ---------- */
+  .timeline { position: relative; margin-top: 64px; padding: 0 10px; }
+  .timeline-track {
+    position: relative; height: 4px; background: var(--border); border-radius: 2px;
+    margin: 0 20px;
+  }
+  .timeline-fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    background: var(--coral); border-radius: 2px; width: 20%;
+  }
+  .timeline-points { display: flex; justify-content: space-between; margin: 0 20px; }
+  .tp { position: relative; width: 0; }
+  .tp .dot {
+    width: 14px; height: 14px; border-radius: 50%; background: var(--purple);
+    border: 3px solid var(--bg); position: absolute; top: -9px; left: -7px;
+  }
+  .tp:nth-child(1) .dot { background: var(--coral); }
+  .tp:nth-child(2) .dot { background: var(--purple); }
+  .tp:nth-child(3) .dot { background: var(--cyan); }
+  .tp-label { margin-top: 26px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .tp-sub { color: var(--text-muted); font-size: 13px; margin-top: 4px; max-width: 16ch; }
+  .tp:last-child .tp-label, .tp:last-child .tp-sub { text-align: right; }
+  .tp:not(:first-child):not(:last-child) .tp-label,
+  .tp:not(:first-child):not(:last-child) .tp-sub { text-align: center; }
+  @media (max-width: 640px) {
+    .timeline-track { display: none; }
+    .timeline-points {
+      flex-direction: column;
+      margin: 0 0 0 7px;
+      border-left: 2px solid var(--border);
+      gap: 0;
+    }
+    .tp {
+      width: auto;
+      padding: 0 0 34px 28px;
+      position: relative;
+    }
+    .tp:last-child { padding-bottom: 0; }
+    .tp .dot {
+      position: absolute; top: -1px; left: -8px;
+      margin-bottom: 0;
+    }
+    .tp-label, .tp-sub { text-align: left !important; }
+    .tp-sub { max-width: 28ch; }
+  }
+
+  /* ---------- Contracts ---------- */
+  .contracts { display: flex; flex-direction: column; gap: 16px; }
+  .contract-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;
+  }
+  .contract-row .meta { min-width: 0; flex: 1 1 320px; }
+  .contract-row .name { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+  .contract-row .addr {
+    font-size: 14px; word-break: break-all; overflow-wrap: anywhere;
+  }
+  .row-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .icon-btn {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
+    font-size: 13px; padding: 8px 14px; border-radius: 6px; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .icon-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .icon-btn.copied { color: var(--coral); border-color: var(--coral); }
+
+  /* ---------- Security list ---------- */
+  .security-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px 48px;
+  }
+  @media (max-width: 680px) { .security-grid { grid-template-columns: 1fr; } }
+  .sec-item { display: flex; gap: 12px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .sec-item svg { flex-shrink: 0; margin-top: 3px; }
+  .sec-item p { font-size: 15px; }
+
+  /* ---------- Quote ---------- */
+  .quote-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 44px 40px;
+    text-align: left;
+  }
+  .quote-block p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(20px, 2.6vw, 26px);
+    max-width: 30ch;
+    color: var(--text);
+  }
+  .quote-block cite { display: block; margin-top: 18px; color: var(--text-muted); font-size: 14px; font-style: normal; }
+
+  /* ---------- Footer ---------- */
+  .audit-answer { max-width: 68ch; display: flex; flex-direction: column; gap: 16px; }
+  .audit-answer p { color: var(--text-muted); font-size: 15px; }
+  .audit-answer strong { color: var(--text); font-weight: 600; }
+
+  footer { border-top: 1px solid var(--border); padding: 48px 0; }
+  .footer-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-brand svg { width: 24px; height: 24px; }
+  .footer-brand span { font-family: 'Lora', serif; font-weight: 600; }
+  footer .disclaimer { color: var(--text-muted); font-size: 13px; max-width: 46ch; }
+  footer .links { display: flex; gap: 20px; font-size: 14px; }
+  footer .links a { margin-right: 20px; }
+  footer .links a:last-child { margin-right: 0; }
+
+  .reveal-slash {
+    stroke-dasharray: 210;
+    stroke-dashoffset: 210;
+    animation: draw 0.9s 0.3s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-slash { animation: none; stroke-dashoffset: 0; }
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  /* ---------- Trade widget ---------- */
+  .trade-banner {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    background: rgba(242,132,92,0.08); border: 1px solid rgba(242,132,92,0.3);
+    border-radius: 8px; padding: 12px 16px; margin-bottom: 24px;
+    font-size: 13px; color: var(--text-muted); line-height: 1.5;
+  }
+  .beta-tag-inline {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.2px; color: var(--coral); border: 1px solid rgba(242,132,92,0.45);
+    border-radius: 4px; padding: 2px 7px; flex-shrink: 0;
+  }
+  .trade-toprow {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+  }
+  .wallet-status-box {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text-muted);
+  }
+  .wallet-status-box .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+  .wallet-status-box .dot.off { background: var(--text-muted); box-shadow: none; }
+  .btn-sm { padding: 9px 16px; font-size: 13px; }
+
+  .trade-stats {
+    display: flex; flex-wrap: wrap; gap: 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .trade-stat {
+    flex: 1 1 140px; padding: 14px 18px; border-right: 1px solid var(--border);
+  }
+  .trade-stat:last-child { border-right: none; }
+  .trade-stat .label { font-size: 10.5px; letter-spacing: 1px; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; }
+  .trade-stat .value { font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 500; margin-top: 5px; color: var(--text); }
+  .trade-stat .value.dim { color: var(--text-muted); font-size: 13px; }
+
+  .chart-panel-nocap { margin-bottom: 24px; }
+  .chart-top-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .chart-top-row h3 { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; margin: 0; }
+  .chart-bars-nocap { display: flex; align-items: flex-end; gap: 6px; height: 110px; padding: 0 2px; }
+  .chart-bar-wrap-nocap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; position: relative; }
+  .chart-bar-nocap { width: 100%; max-width: 30px; border-radius: 3px 3px 0 0; background: var(--purple); min-height: 3px; }
+  .chart-bar-wrap-nocap .bar-label-nocap { font-size: 9.5px; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; margin-top: 6px; }
+  .empty-note { color: var(--text-muted); font-size: 13px; padding: 24px 0; text-align: center; width: 100%; }
+
+  .simple-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 22px; }
+  .simple-tab {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text-muted);
+    padding: 13px 10px; border-radius: 8px; font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; text-align: center;
+  }
+  .simple-tab.active#simpleBuyTab { border-color: var(--cyan); color: var(--cyan); background: rgba(79,203,232,0.1); }
+  .simple-tab.active#simpleSellTab { border-color: var(--coral); color: var(--coral); background: rgba(242,132,92,0.1); }
+  .simple-subhead { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 14px; }
+  .post-fallback { margin-top: 22px; border-top: 1px solid var(--border); padding-top: 18px; }
+  .post-fallback summary {
+    cursor: pointer; font-size: 13.5px; color: var(--cyan); font-weight: 500;
+    list-style: none;
+  }
+  .post-fallback summary::-webkit-details-marker { display: none; }
+  .post-fallback summary::before { content: "+ "; }
+  .post-fallback[open] summary::before { content: "\2212 "; }
+  .buy-btn-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .buy-btn-row .price-line { font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  .buy-btn-row .price-line .amt { font-weight: 600; }
+
+
+  .dir-btn {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text-muted);
+    padding: 11px 10px; border-radius: 7px; font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600; cursor: pointer; text-align: center;
+  }
+  .dir-btn.active#tradeDirBuy { border-color: var(--cyan); color: var(--cyan); background: rgba(79,203,232,0.1); }
+  .dir-btn.active#tradeDirSell { border-color: var(--coral); color: var(--coral); background: rgba(242,132,92,0.1); }
+
+  .field-nocap { margin-bottom: 14px; }
+  .field-nocap label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+  .field-nocap input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    padding: 11px 13px; border-radius: 7px; font-size: 13.5px;
+  }
+  .field-nocap input:focus { outline: none; border-color: var(--purple); }
+  .suggested-tag { font-size: 10px; color: var(--text-muted); font-weight: 400; }
+
+  .trade-status-msg { font-size: 13px; color: var(--text-muted); margin-top: 12px; min-height: 18px; }
+  .trade-status-msg.error { color: var(--coral); }
+  .trade-status-msg.success { color: var(--cyan); }
+
+  .offer-list-nocap { display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; }
+  .offer-card-nocap {
+    border: 1px solid var(--border); border-left: 3px solid var(--text-muted);
+    border-radius: 8px; padding: 14px 16px; background: var(--surface-2);
+  }
+  .offer-card-nocap.buy { border-left-color: var(--cyan); }
+  .offer-card-nocap.sell { border-left-color: var(--coral); }
+  .offer-card-nocap .top-row-nocap { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 11px; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; }
+  .offer-card-nocap .trade-line { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .offer-card-nocap .trade-line .g { color: var(--coral); }
+  .offer-card-nocap .trade-line .r { color: var(--cyan); }
+  .offer-card-nocap .meta-line { font-size: 11.5px; color: var(--text-muted); }
+  .offer-card-nocap .actions-row { margin-top: 10px; display: flex; gap: 8px; }
+
+  /* ---------- ToS gate modal ---------- */
+  .tos-gate-overlay {
+    position: fixed; inset: 0; z-index: 200; background: rgba(11,14,23,0.93);
+    backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .tos-gate-panel {
+    max-width: 560px; width: 100%; max-height: 85vh; display: flex; flex-direction: column;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.8);
+  }
+  .tos-gate-header { padding: 22px 24px 14px; }
+  .tos-gate-header h2 { margin: 0 0 6px; font-size: 19px; }
+  .tos-gate-header p { margin: 0; font-size: 13px; color: var(--text-muted); }
+  .tos-gate-body {
+    flex: 1; overflow-y: auto; padding: 16px 24px; font-size: 12.5px; line-height: 1.6;
+    color: var(--text-muted); white-space: pre-wrap; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif;
+  }
+  .tos-gate-footer { padding: 18px 24px 22px; display: flex; flex-direction: column; gap: 12px; }
+  .tos-gate-footer label { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; cursor: pointer; color: var(--text); }
+  .tos-gate-footer input[type=checkbox] { margin-top: 2px; }
+  .tos-gate-buttons { display: flex; gap: 10px; margin-top: 6px; }
+  .tos-gate-buttons button { flex: 1; padding: 11px 16px; border-radius: 8px; font-weight: 600; font-size: 13.5px; cursor: pointer; font-family: 'Inter', sans-serif; border: none; }
+  #tosCancelBtn { border: 1px solid var(--border) !important; background: transparent; color: var(--text-muted); }
+  #tosAgreeBtn { flex-grow: 2; background: var(--purple); color: #fff; }
+  #tosAgreeBtn:disabled { background: var(--surface-2); color: var(--text-muted); cursor: default; }
+
+</style>
+</head>
+<body>
+
+<div id="tosGateOverlay" class="tos-gate-overlay">
+  <div class="tos-gate-panel">
+    <div class="tos-gate-header">
+      <h2>Before you connect a wallet</h2>
+      <p>Please read and accept the terms below. This only needs to happen once.</p>
+    </div>
+    <div class="tos-gate-body" id="tosGateBodyText"></div>
+    <div class="tos-gate-footer">
+      <label><input type="checkbox" id="tosAgreeTerms"> I have read and agree to the Terms of Service above.</label>
+      <label><input type="checkbox" id="tosAgreeJurisdiction"> I certify that I am not located in, a resident of, or accessing this from the United States, United Kingdom, or a jurisdiction where use of this software would be unlawful.</label>
+      <div class="tos-gate-buttons">
+        <button id="tosCancelBtn" type="button">Cancel</button>
+        <button id="tosAgreeBtn" type="button" disabled>Agree &amp; Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="top-banner">
+  <div class="wrap top-banner-inner">
+    <span class="beta-tag">BETA</span>
+    <span>Experimental token on an early-stage chain. Contract source is published and verified — that confirms the deployed code matches what's shown, it is not a professional third-party security audit. <a href="#audit-note">Read more</a>.</span>
+  </div>
+</div>
+<nav class="top">
+  <div class="brand">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="navIconGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#EC4899"/>
+          <stop offset="100%" stop-color="#3B82F6"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="60" height="60" rx="16" fill="url(#navIconGrad)"/>
+      <path d="M14 38 C14 22 21 15 30 15 C39 15 46 22 46 38 C46 44 41 47 30 47 C19 47 14 44 14 38 Z" fill="#ffffff"/>
+      <circle cx="24" cy="30" r="3" fill="#3B2E63"/>
+      <circle cx="36" cy="30" r="3" fill="#3B2E63"/>
+    </svg>
+    <span class="wordmark">$NOCAP</span>
+  </div>
+  <div class="nav-right">
+    <span class="badge nav-badge-hide-mobile">✓ Source verified</span>
+    <a class="btn btn-ghost nav-badge-hide-mobile" href="#contracts">View contracts</a>
+    <div class="nav-wallet">
+      <span class="dot off" id="navStatusDot"></span>
+      <button class="btn btn-sm" id="navConnectBtn" type="button">Connect wallet</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-mascot">
+      <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="$NOCAP mascot: a cat wearing sunglasses and a crossed-out cap">
+        <defs>
+          <clipPath id="lensClip">
+            <rect x="78" y="128" width="42" height="24" rx="9"/>
+            <rect x="120" y="128" width="42" height="24" rx="9"/>
+          </clipPath>
+          <linearGradient id="glintGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#ffffff" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g class="mascot-float">
+          <path d="M120 224 C68 224 46 186 46 148 C46 100 78 66 120 66 C162 66 194 100 194 148 C194 186 172 224 120 224 Z" fill="#5F5E5A"/>
+          <path d="M60 150 L44 88 L100 118 Z" fill="#403F3B"/>
+          <path d="M180 150 L196 88 L140 118 Z" fill="#403F3B"/>
+          <rect x="78" y="128" width="42" height="24" rx="9" fill="#0A0A0A"/>
+          <rect x="120" y="128" width="42" height="24" rx="9" fill="#0A0A0A"/>
+          <rect x="120" y="136" width="6" height="6" fill="#0A0A0A"/>
+          <g clip-path="url(#lensClip)">
+            <rect class="mascot-glint" x="70" y="120" width="16" height="40" fill="url(#glintGrad)" transform="rotate(20 90 140)"/>
+          </g>
+          <path d="M96 168 Q120 180 144 168" stroke="#26251F" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <g transform="translate(120,92)">
+            <path d="M -46 5 Q -46 -28 0 -28 Q 46 -28 46 5 L 46 11 L -46 11 Z" fill="#221C4E"/>
+            <ellipse cx="0" cy="5" rx="46" ry="8" fill="#14102E"/>
+          </g>
+          <line class="reveal-slash" x1="66" y1="58" x2="176" y2="128" stroke="#F2845C" stroke-width="11" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <div>
+      <h1><span class="wordmark-inline">$NOCAP</span> will not make you rich.</h1>
+      <p class="tagline">No lies. No hype. No cap.</p>
+      <p class="desc">$NOCAP is a memecoin built so the brand and the mechanics say the same thing — fixed supply, vested dev allocation, renounced ownership, and a fully verified contract you can read yourself instead of taking our word for it.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="#contracts">Read the contract</a>
+        <a class="btn btn-ghost" href="#tokenomics">See the tokenomics</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap stats">
+  <div class="stats-row">
+    <div class="stat"><div class="num">0%</div><div class="label">Presale</div></div>
+    <div class="stat"><div class="num">0</div><div class="label">Mint function</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">Public wallets</div></div>
+    <div class="stat"><div class="num">1B</div><div class="label">Fixed total supply</div></div>
+  </div>
+</div>
+
+<section id="tokenomics">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Where the supply actually goes</h2>
+      <p>1,000,000,000 $NOCAP total. No mint function exists anywhere in the contract — this is all there will ever be.</p>
+    </div>
+    <div class="tokenomics-grid">
+      <div>
+        <div class="stackbar">
+          <div style="width:92%; background:#9B3FE0;"></div>
+          <div style="width:5%; background:#F2845C;"></div>
+          <div style="width:3%; background:#4FCBE8;"></div>
+        </div>
+      </div>
+      <div class="alloc-list">
+        <div class="alloc-item">
+          <div class="swatch" style="background:#9B3FE0;"></div>
+          <div>
+            <h3>Public liquidity <span class="pct">92%</span></h3>
+            <p>Seeded directly into wallets earmarked for the liquidity pool. No presale, no early-buyer allocation.</p>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="swatch" style="background:#F2845C;"></div>
+          <div>
+            <h3>Dev / team <span class="pct">5%</span></h3>
+            <p>Held in a vesting contract — 3-month cliff, then a 12-month linear unlock. Can't be sold early, enforced by the contract itself.</p>
+          </div>
+        </div>
+        <div class="alloc-item">
+          <div class="swatch" style="background:#4FCBE8;"></div>
+          <div>
+            <h3>Marketing <span class="pct">3%</span></h3>
+            <p>Listings, giveaways, and community incentives. Wallet address is public.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Dev vesting schedule</h2>
+      <p>Enforced on-chain by the vesting contract — not a promise, a rule the code follows.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-track"><div class="timeline-fill"></div></div>
+      <div class="timeline-points">
+        <div class="tp">
+          <div class="dot"></div>
+          <div class="tp-label">Launch</div>
+          <div class="tp-sub">Contract deployed. 0% unlocked.</div>
+        </div>
+        <div class="tp">
+          <div class="dot"></div>
+          <div class="tp-label">3-month cliff</div>
+          <div class="tp-sub">Nothing releasable before this point.</div>
+        </div>
+        <div class="tp">
+          <div class="dot"></div>
+          <div class="tp-label">15 months</div>
+          <div class="tp-sub">100% unlocked, linear from cliff.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contracts">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The contracts, live and verified</h2>
+      <p>Deployed on BlockDAG (chain 1404). Source code verified exact-match — read it yourself, don't take our word for it.</p>
+    </div>
+    <div class="contracts">
+      <div class="contract-row">
+        <div class="meta">
+          <div class="name">Token contract — NoCapToken.sol</div>
+          <div class="addr mono">0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752</div>
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn" data-copy="0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752">Copy</button>
+          <a class="icon-btn" href="https://scan.welshdag.trade/address/0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752?tab=contract" target="_blank" rel="noopener">View source</a>
+        </div>
+      </div>
+      <div class="contract-row">
+        <div class="meta">
+          <div class="name">Vesting contract — NoCapVesting.sol</div>
+          <div class="addr mono">0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1</div>
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn" data-copy="0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1">Copy</button>
+          <a class="icon-btn" href="https://scan.welshdag.trade/address/0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1?tab=contract" target="_blank" rel="noopener">View source</a>
+        </div>
+      </div>
+      <div class="contract-row">
+        <div class="meta">
+          <div class="name">LP lock contract</div>
+          <div class="addr mono" style="color:var(--text-muted);">Pending — deploys once a DEX pool exists on BlockDAG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trade">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Buy or sell $NOCAP</h2>
+      <p>This runs on Handshake — the same peer-to-peer escrow contract as <a href="https://otcescrow.pages.dev/" target="_blank" rel="noopener">otcescrow.pages.dev</a>, just with $NOCAP pre-filled. There's no automatic pricing curve: you post an offer at the price you choose, or fill someone else's. The chart below only ever shows real fills — it stays empty until real trades happen.</p>
+    </div>
+
+    <div class="trade-banner">
+      <span class="beta-tag-inline">BETA</span>
+      <span>Real BDAG, real escrow, unaudited contract. This holds assets in custody while an offer is open — read the <a href="#trade-audit">terms</a> before connecting a wallet.</span>
+    </div>
+
+    <div class="trade-toprow">
+      <div class="wallet-status-box">
+        <span class="dot off" id="tradeStatusDot"></span>
+        <span id="tradeStatusText">not connected</span>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="tradeConnectBtn">Connect wallet</button>
+    </div>
+
+    <div class="trade-stats">
+      <div class="trade-stat"><div class="label">last price</div><div class="value" id="tradeLastPrice">—</div></div>
+      <div class="trade-stat"><div class="label">open offers</div><div class="value" id="tradeOpenCount">—</div></div>
+      <div class="trade-stat"><div class="label">bdag / usd</div><div class="value" id="tradeBdagUsd">—</div></div>
+      <div class="trade-stat"><div class="label">network</div><div class="value dim" id="tradeNetwork">—</div></div>
+    </div>
+
+    <div class="panel chart-panel-nocap">
+      <div class="chart-top-row">
+        <h3>Recent fills</h3>
+        <span class="mono" id="tradeVolTotal" style="font-size:12px; color:var(--text-muted);"></span>
+      </div>
+      <div class="chart-bars-nocap" id="tradeChartBars">
+        <div class="empty-note">Connect your wallet to check trade history.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="simple-tabs">
+        <button class="simple-tab active" id="simpleBuyTab" type="button">Buy $NOCAP</button>
+        <button class="simple-tab" id="simpleSellTab" type="button">Sell $NOCAP</button>
+      </div>
+
+      <div id="simpleBuyPanel">
+        <h4 class="simple-subhead">Available to buy right now</h4>
+        <div class="offer-list-nocap" id="buyOffersList">
+          <div class="empty-note">Connect your wallet to check what's available.</div>
+        </div>
+        <details class="post-fallback">
+          <summary>Nothing matches what you want? Post your own buy offer</summary>
+          <div class="field-nocap" style="margin-top:16px;">
+            <label>BDAG you give</label>
+            <input type="text" id="tradeGiveInput" value="1" class="mono">
+          </div>
+          <div class="field-nocap">
+            <label>$NOCAP you want <span class="suggested-tag">suggested ratio</span></label>
+            <input type="text" id="tradeGetInput" value="100" class="mono">
+          </div>
+          <div class="field-nocap">
+            <label>Restrict to one address (optional)</label>
+            <input type="text" id="tradeTakerInput" placeholder="0x... — leave blank to allow anyone" class="mono">
+          </div>
+          <button class="btn btn-full" id="tradeCreateBtn" data-dir="buy">Post buy offer</button>
+          <div class="trade-status-msg" id="tradeCreateStatus"></div>
+        </details>
+      </div>
+
+      <div id="simpleSellPanel" style="display:none;">
+        <h4 class="simple-subhead">Buyers waiting right now</h4>
+        <div class="offer-list-nocap" id="sellOffersList">
+          <div class="empty-note">Connect your wallet to check what's available.</div>
+        </div>
+        <details class="post-fallback">
+          <summary>No buyer at your price? Post your own sell offer</summary>
+          <div class="field-nocap" style="margin-top:16px;">
+            <label>$NOCAP you give</label>
+            <input type="text" id="tradeGiveInputSell" value="100" class="mono">
+          </div>
+          <div class="field-nocap">
+            <label>BDAG you want <span class="suggested-tag">suggested ratio</span></label>
+            <input type="text" id="tradeGetInputSell" value="1" class="mono">
+          </div>
+          <div class="field-nocap">
+            <label>Restrict to one address (optional)</label>
+            <input type="text" id="tradeTakerInputSell" placeholder="0x... — leave blank to allow anyone" class="mono">
+          </div>
+          <button class="btn btn-full" id="tradeCreateBtnSell" data-dir="sell">Post sell offer</button>
+          <div class="trade-status-msg" id="tradeCreateStatusSell"></div>
+        </details>
+      </div>
+    </div>
+
+    <p id="trade-audit" class="audit-answer" style="margin-top:32px; font-size:13px;">
+      <strong>Custody note:</strong> when you buy, sell, or post an offer, the asset changing hands is locked into Handshake's contract itself until it's filled or cancelled for a full refund. Neither this page nor its operators can access, move, or freeze assets inside an open offer — only the contract's own code releases them. It is still custody, held by code, for as long as an offer sits open. The contract has not had a third-party security audit — see <a href="#audit-note">our audit note</a> above. Not offered to persons in the United States or United Kingdom.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Contract security</h2>
+      <p>Every item below is verifiable by anyone on the block explorer.</p>
+    </div>
+    <div class="security-grid">
+      <div class="sec-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>Fixed supply — no mint function reachable by any wallet</p>
+      </div>
+      <div class="sec-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>No blacklist or whitelist function that could freeze wallets</p>
+      </div>
+      <div class="sec-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>No hidden max-transaction or max-wallet controls</p>
+      </div>
+      <div class="sec-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>Ownership renounced after initial distribution</p>
+      </div>
+      <div class="sec-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>Contract source verified — exact match on the block explorer</p>
+      </div>
+      <div class="sec-item">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>LP tokens will be locked — lock address & unlock date published when live</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="audit-note">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Has this been audited?</h2>
+      <p>No — and we're not going to blur that line. Here's exactly what has and hasn't happened.</p>
+    </div>
+    <div class="audit-answer">
+      <p>Both contracts are <strong>source-verified</strong> on the block explorer — that confirms the deployed bytecode matches the published Solidity exactly. It's a transparency check: it proves the code shown is the code running, so you can read it yourself instead of trusting a description of it.</p>
+      <p>What it is not: a professional third-party security audit. We ran the contracts through Auditrace, an automated static-analysis tool — it flags known patterns, but it can't compile, execute, or guarantee full coverage. No Critical or High findings came back; the remaining Medium ones are noted and explained in the code comments themselves.</p>
+      <p>$NOCAP is experimental software on an early-stage chain (BlockDAG, chain 1404). Treat any amount you put in as money you could lose entirely — only ever risk what you're fully comfortable losing.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="quote-block">
+      <p>"We're not going to pretend this will make you a millionaire. No cap."</p>
+      <cite>— the whole pitch, honestly</cite>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-row">
+    <div>
+      <div class="footer-brand">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="footerIconGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#EC4899"/>
+              <stop offset="100%" stop-color="#3B82F6"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="60" height="60" rx="16" fill="url(#footerIconGrad)"/>
+          <path d="M14 38 C14 22 21 15 30 15 C39 15 46 22 46 38 C46 44 41 47 30 47 C19 47 14 44 14 38 Z" fill="#ffffff"/>
+          <circle cx="24" cy="30" r="3" fill="#3B2E63"/>
+          <circle cx="36" cy="30" r="3" fill="#3B2E63"/>
+        </svg>
+        <span class="wordmark">$NOCAP</span>
+      </div>
+      <p class="disclaimer" style="margin-top:14px;">A memecoin on BlockDAG (chain 1404). Not financial advice. Memecoins are speculative and can go to zero — only ever put in what you can afford to lose.</p>
+      <p class="disclaimer mono" style="margin-top:12px; font-size:11px; letter-spacing:0.01em;">$nocap · memecoin · beta software · not independently audited by a third-party firm · verify contract source before trading · not financial advice</p>
+    </div>
+    <div class="links">
+      <a href="#contracts">Contracts</a>
+      <a href="#tokenomics">Tokenomics</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('[data-copy]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var text = btn.getAttribute('data-copy');
+      var done = function() {
+        var original = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function() {
+          fallbackCopy(text, done);
+        });
+      } else {
+        fallbackCopy(text, done);
+      }
+      function fallbackCopy(text, cb) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        cb();
+      }
+    });
+  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.1/ethers.umd.min.js"></script>
+<script>
+(function() {
+  // ---------------------------------------------------------------------
+  // $NOCAP trading widget — talks to the existing, already-deployed
+  // Handshake escrow contract on chain 1404. No new contract, no new audit
+  // surface. This is a second front-end for infrastructure that already
+  // works, scoped to one token.
+  // ---------------------------------------------------------------------
+  const CONTRACT_ADDRESS = "0xD907701A2D96f7D0E7596b02737C9F36446cf5CA";
+  const NOCAP_TOKEN_ADDRESS = "0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752";
+  const CHAIN_ID_DEC = 1404;
+  const CHAIN_ID_HEX = "0x57c";
+  const NETWORK_NAME = "BlockDAG (Chain 1404)";
+  const RPC_URLS = [
+    "https://rpc.bdagexplorer.com",
+    "https://rpc.welshdag.trade",
+    "https://rpc.cms-mining-pool.net",
+    "https://rpc.dvdmining.com",
+    "https://rms-bdag-rpc.de/api/rpc-live",
+    "https://rpc.capedag.com",
+    "https://rpc.west.bdag-us.org",
+  ];
+  const NATIVE_SYMBOL = "BDAG";
+
+  const CONTRACT_ABI = [
+    "function createOfferGivingNative(address token, uint256 amountToken, address taker) payable returns (uint256)",
+    "function createOfferGivingToken(address token, uint256 amountToken, uint256 amountNative, address taker) returns (uint256)",
+    "function fillOfferGivingToken(uint256 id)",
+    "function fillOfferGivingNative(uint256 id) payable",
+    "function cancelOffer(uint256 id)",
+    "function totalOffers() view returns (uint256)",
+    "function feeBps() view returns (uint16)",
+    "function getOffer(uint256 id) view returns (address maker, address taker, address token, uint256 amountNative, uint256 amountToken, bool makerGivesNative, uint8 status, uint64 createdAt, uint16 feeBpsAtCreation)",
+    "event OfferCreated(uint256 indexed id, address indexed maker, address indexed taker, address token, uint256 amountNative, uint256 amountToken, bool makerGivesNative)",
+    "event OfferFilled(uint256 indexed id, address indexed taker, uint256 feePaid)",
+    "event OfferCancelled(uint256 indexed id)"
+  ];
+  const ERC20_ABI = [
+    "function approve(address spender, uint256 amount) returns (bool)",
+    "function allowance(address owner, address spender) view returns (uint256)",
+    "function balanceOf(address owner) view returns (uint256)",
+    "function decimals() view returns (uint8)",
+    "function symbol() view returns (string)"
+  ];
+  const STATUS_LABEL = ["None", "Open", "Filled", "Cancelled"];
+
+  let provider, signer, userAddress, contract, tokenDecimals = 18;
+  let direction = "buy"; // buy = give BDAG, want NOCAP | sell = give NOCAP, want BDAG
+  let bdagUsdPrice = null;
+
+  function friendlyError(err) {
+    const raw = err?.reason || err?.shortMessage || err?.message || String(err);
+    if (raw.includes("user rejected")) return "You rejected the transaction.";
+    if (raw.includes("insufficient funds")) return "Insufficient funds for this transaction.";
+    if (raw.includes("not open")) return "This offer is no longer open.";
+    if (raw.includes("not your offer")) return "You are not the counterparty for this offer.";
+    if (raw.includes("wrong BDAG amount")) return "Sent BDAG amount doesn't match the offer.";
+    if (raw.includes("could not coalesce error") || raw.includes("missing response")) {
+      return "The chain 1404 RPC gave back a response ethers couldn't parse — this happens with this chain's non-standard nodes. Try again in a moment.";
+    }
+    if (raw.includes("missing revert data") || err?.code === "CALL_EXCEPTION") {
+      return "The contract rejected this transaction — check your balance/allowance and the offer's parameters.";
+    }
+    return raw.length > 140 ? raw.slice(0, 140) + "…" : raw;
+  }
+
+  // ---- ToS gate (identical terms to the main Handshake app, for consistency) ----
+  const TOS_STORAGE_KEY = "handshake_tos_agreed_v1";
+  const HANDSHAKE_TOS_TEXT = `
+1. Experimental software, provided AS IS. This interface talks to Handshake, an early-stage, unaudited smart contract on BlockDAG (chain ID 1404). It is provided strictly "AS IS" and "AS AVAILABLE," with no warranty of any kind. You assume 100% of the risk of using it, including smart contract bugs, exploits, chain reorganizations or forks, network outages, and loss of funds.
+
+2. How custody actually works here. This is an escrow contract: when you create an offer, the asset you're giving is locked into the smart contract itself — automatically, by its immutable code — until the offer is filled by a counterparty or you cancel it for a full refund. The operators of this interface never gain the ability to access, move, freeze, or redirect assets inside an open offer; only the contract's own code can release them, to either the maker (on cancel) or the taker (on fill). This is meaningfully different from a custodial service where a person or company controls your funds — but it is still custody, held by code rather than by us, for as long as an offer sits open.
+
+3. No investment, financial, or legal advice. Nothing on this site is investment, financial, tax, or legal advice.
+
+4. Fees. A protocol fee (currently 0.25%, capped at 3% by the contract) is taken from the native BDAG side of every filled trade.
+
+5. Jurisdiction restrictions. This software is not offered to, and may not be used by, persons located in, resident in, or accessing it from any jurisdiction where such use would be unlawful, or from the United States or United Kingdom. By continuing, you certify that none of these restrictions apply to you.
+
+6. No warranty, limitation of liability. To the maximum extent permitted by law, the operators of this interface are not liable for any direct, indirect, incidental, special, or consequential damages arising from your use of this software, including loss of funds — even if advised of the possibility of such damages.
+
+7. Assumption of risk. This contract has not undergone a third-party security audit. You are solely responsible for verifying contract addresses, offer terms, and counterparty details before creating or filling any offer.
+
+8. Severability. If any provision of these terms is found unenforceable, the remaining provisions continue in full force.
+
+[Operator legal name, governing law / jurisdiction for disputes, and contact details to be added here before this is used for real.]
+`.trim();
+
+  function tosAgreed() {
+    try { return window.localStorage.getItem(TOS_STORAGE_KEY) === "1"; } catch { return false; }
+  }
+  function showTosGate() {
+    document.getElementById("tosGateBodyText").textContent = HANDSHAKE_TOS_TEXT;
+    document.getElementById("tosGateOverlay").style.display = "flex";
+  }
+  function hideTosGate() { document.getElementById("tosGateOverlay").style.display = "none"; }
+  function updateTosAgreeButton() {
+    const ok = document.getElementById("tosAgreeTerms").checked && document.getElementById("tosAgreeJurisdiction").checked;
+    document.getElementById("tosAgreeBtn").disabled = !ok;
+  }
+  document.getElementById("tosAgreeTerms").addEventListener("change", updateTosAgreeButton);
+  document.getElementById("tosAgreeJurisdiction").addEventListener("change", updateTosAgreeButton);
+  document.getElementById("tosCancelBtn").addEventListener("click", hideTosGate);
+  document.getElementById("tosAgreeBtn").addEventListener("click", () => {
+    try { window.localStorage.setItem(TOS_STORAGE_KEY, "1"); } catch {}
+    hideTosGate();
+    doConnectWallet();
+  });
+
+  async function ensureCorrectNetwork() {
+    const network = await provider.getNetwork();
+    if (Number(network.chainId) !== CHAIN_ID_DEC) {
+      try {
+        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_ID_HEX }] });
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: CHAIN_ID_HEX, chainName: NETWORK_NAME,
+              nativeCurrency: { name: NATIVE_SYMBOL, symbol: NATIVE_SYMBOL, decimals: 18 },
+              rpcUrls: RPC_URLS,
+            }],
+          });
+        } else { throw switchError; }
+      }
+    }
+  }
+
+  async function doConnectWallet() {
+    if (!window.ethereum) { alert("No wallet found. Install MetaMask or a similar browser wallet."); return; }
+    try {
+      provider = new ethers.BrowserProvider(window.ethereum, undefined, { batchMaxCount: 1 });
+      await provider.send("eth_requestAccounts", []);
+      await ensureCorrectNetwork();
+      provider = new ethers.BrowserProvider(window.ethereum, undefined, { batchMaxCount: 1 });
+      signer = await provider.getSigner();
+      userAddress = await signer.getAddress();
+      contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+      const tokenRead = new ethers.Contract(NOCAP_TOKEN_ADDRESS, ERC20_ABI, provider);
+      tokenDecimals = Number(await tokenRead.decimals().catch(() => 18));
+
+      document.getElementById("tradeConnectBtn").textContent = userAddress.slice(0,6) + "…" + userAddress.slice(-4);
+      document.getElementById("tradeStatusDot").classList.remove("off");
+      document.getElementById("tradeStatusText").textContent = "connected";
+      document.getElementById("tradeNetwork").textContent = NETWORK_NAME;
+      document.getElementById("tradeNetwork").classList.remove("dim");
+
+      document.getElementById("navConnectBtn").textContent = userAddress.slice(0,6) + "…" + userAddress.slice(-4);
+      document.getElementById("navStatusDot").classList.remove("off");
+
+      refreshTradeStats();
+      loadBuyOffersList();
+      loadNocapHistory();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function handleConnectClick() {
+    if (!tosAgreed()) { showTosGate(); return; }
+    doConnectWallet();
+  }
+  document.getElementById("tradeConnectBtn").addEventListener("click", handleConnectClick);
+  document.getElementById("navConnectBtn").addEventListener("click", handleConnectClick);
+
+  // ---- BDAG/USD, informational only, never used by the contract ----
+  async function loadBdagUsd() {
+    const el = document.getElementById("tradeBdagUsd");
+    try {
+      const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=blockdag&vs_currencies=usd");
+      const data = await res.json();
+      const price = data?.blockdag?.usd;
+      if (price === undefined) { el.textContent = "n/a"; return; }
+      bdagUsdPrice = price;
+      el.textContent = "$" + (price < 0.01 ? price.toFixed(8) : price.toFixed(4));
+    } catch (e) { el.textContent = "n/a"; }
+  }
+  loadBdagUsd();
+
+  async function refreshTradeStats() {
+    if (!contract) return;
+    try {
+      const total = await contract.totalOffers();
+      let openCount = 0;
+      const n = Number(total);
+      for (let id = n; id >= 1 && id > n - 200; id--) {
+        const o = await contract.getOffer(id);
+        if (o.token.toLowerCase() === NOCAP_TOKEN_ADDRESS.toLowerCase() && Number(o.status) === 1) openCount++;
+      }
+      document.getElementById("tradeOpenCount").textContent = openCount;
+    } catch (e) { /* fail quietly */ }
+  }
+
+  // ---- Buy/Sell tabs ----
+  const simpleBuyTab = document.getElementById("simpleBuyTab");
+  const simpleSellTab = document.getElementById("simpleSellTab");
+  const simpleBuyPanel = document.getElementById("simpleBuyPanel");
+  const simpleSellPanel = document.getElementById("simpleSellPanel");
+
+  simpleBuyTab.addEventListener("click", () => {
+    simpleBuyTab.classList.add("active"); simpleSellTab.classList.remove("active");
+    simpleBuyPanel.style.display = ""; simpleSellPanel.style.display = "none";
+    loadBuyOffersList();
+  });
+  simpleSellTab.addEventListener("click", () => {
+    simpleSellTab.classList.add("active"); simpleBuyTab.classList.remove("active");
+    simpleSellPanel.style.display = ""; simpleBuyPanel.style.display = "none";
+    loadSellOffersList();
+  });
+
+  function reloadOfferLists() { loadBuyOffersList(); loadSellOffersList(); }
+
+  // ---- Post-your-own fallback: Buy side (creates a BDAG-for-NOCAP offer) ----
+  document.getElementById("tradeCreateBtn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("tradeCreateStatus");
+    statusEl.className = "trade-status-msg";
+    if (!contract) { statusEl.textContent = "Connect your wallet first."; return; }
+    const takerInput = document.getElementById("tradeTakerInput").value.trim();
+    const taker = takerInput || ethers.ZeroAddress;
+    if (takerInput && !ethers.isAddress(takerInput)) { statusEl.textContent = "Restricted address isn't valid."; statusEl.className = "trade-status-msg error"; return; }
+    const btn = document.getElementById("tradeCreateBtn");
+    try {
+      btn.disabled = true;
+      const amountNativeWei = ethers.parseEther(document.getElementById("tradeGiveInput").value.trim() || "0");
+      const amountTokenUnits = ethers.parseUnits(document.getElementById("tradeGetInput").value.trim() || "0", tokenDecimals);
+      statusEl.textContent = "Confirm the transaction in your wallet…";
+      const tx = await contract.createOfferGivingNative(NOCAP_TOKEN_ADDRESS, amountTokenUnits, taker, { value: amountNativeWei });
+      statusEl.textContent = "Creating offer…";
+      await tx.wait();
+      statusEl.textContent = "Buy offer posted."; statusEl.className = "trade-status-msg success";
+      document.getElementById("tradeTakerInput").value = "";
+      refreshTradeStats(); reloadOfferLists(); loadNocapHistory();
+    } catch (err) {
+      statusEl.textContent = friendlyError(err); statusEl.className = "trade-status-msg error";
+    } finally { btn.disabled = false; }
+  });
+
+  // ---- Post-your-own fallback: Sell side (creates a NOCAP-for-BDAG offer) ----
+  document.getElementById("tradeCreateBtnSell").addEventListener("click", async () => {
+    const statusEl = document.getElementById("tradeCreateStatusSell");
+    statusEl.className = "trade-status-msg";
+    if (!contract) { statusEl.textContent = "Connect your wallet first."; return; }
+    const takerInput = document.getElementById("tradeTakerInputSell").value.trim();
+    const taker = takerInput || ethers.ZeroAddress;
+    if (takerInput && !ethers.isAddress(takerInput)) { statusEl.textContent = "Restricted address isn't valid."; statusEl.className = "trade-status-msg error"; return; }
+    const btn = document.getElementById("tradeCreateBtnSell");
+    try {
+      btn.disabled = true;
+      const amountTokenUnits = ethers.parseUnits(document.getElementById("tradeGiveInputSell").value.trim() || "0", tokenDecimals);
+      const amountNativeWei = ethers.parseEther(document.getElementById("tradeGetInputSell").value.trim() || "0");
+      const token = new ethers.Contract(NOCAP_TOKEN_ADDRESS, ERC20_ABI, signer);
+      statusEl.textContent = "Approving token spend…";
+      const allowance = await token.allowance(userAddress, CONTRACT_ADDRESS);
+      if (allowance < amountTokenUnits) {
+        const approveTx = await token.approve(CONTRACT_ADDRESS, amountTokenUnits);
+        await approveTx.wait();
+      }
+      statusEl.textContent = "Confirm the offer transaction in your wallet…";
+      const tx = await contract.createOfferGivingToken(NOCAP_TOKEN_ADDRESS, amountTokenUnits, amountNativeWei, taker);
+      statusEl.textContent = "Creating offer…";
+      await tx.wait();
+      statusEl.textContent = "Sell offer posted."; statusEl.className = "trade-status-msg success";
+      document.getElementById("tradeTakerInputSell").value = "";
+      refreshTradeStats(); reloadOfferLists(); loadNocapHistory();
+    } catch (err) {
+      statusEl.textContent = friendlyError(err); statusEl.className = "trade-status-msg error";
+    } finally { btn.disabled = false; }
+  });
+
+  // ---- Buy list: open offers where the MAKER is selling NOCAP for BDAG.
+  // A visitor here just wants to give BDAG and receive NOCAP, so we show
+  // offers they can fill with one click via fillOfferGivingNative. ----
+  async function loadBuyOffersList() {
+    const listEl = document.getElementById("buyOffersList");
+    if (!contract) { listEl.innerHTML = '<div class="empty-note">Connect your wallet to check what\'s available.</div>'; return; }
+    listEl.innerHTML = '<div class="empty-note">Checking the chain for sellers…</div>';
+    try {
+      const total = Number(await contract.totalOffers());
+      const rows = [];
+      for (let id = total; id >= 1 && rows.length < 30; id--) {
+        const o = await contract.getOffer(id);
+        if (o.token.toLowerCase() !== NOCAP_TOKEN_ADDRESS.toLowerCase()) continue;
+        if (Number(o.status) !== 1) continue; // Open
+        if (o.makerGivesNative) continue; // this is a buy-side offer, not relevant here
+        rows.push({ id, o });
+      }
+      rows.sort((a, b) => {
+        const pa = parseFloat(ethers.formatEther(a.o.amountNative)) / parseFloat(ethers.formatUnits(a.o.amountToken, tokenDecimals));
+        const pb = parseFloat(ethers.formatEther(b.o.amountNative)) / parseFloat(ethers.formatUnits(b.o.amountToken, tokenDecimals));
+        return pa - pb; // cheapest NOCAP-per-BDAG first
+      });
+      listEl.innerHTML = rows.length
+        ? rows.map(r => renderSimpleOfferCard(r.id, r.o, "buy")).join("")
+        : '<div class="empty-note">No sellers yet — post the first buy offer below.</div>';
+      attachSimpleOfferActions();
+    } catch (err) {
+      listEl.innerHTML = `<div class="empty-note">Could not load offers: ${friendlyError(err)}</div>`;
+    }
+  }
+
+  // ---- Sell list: open offers where the MAKER is buying NOCAP with BDAG.
+  // A visitor here wants to give NOCAP and receive BDAG, filled via
+  // fillOfferGivingToken. ----
+  async function loadSellOffersList() {
+    const listEl = document.getElementById("sellOffersList");
+    if (!contract) { listEl.innerHTML = '<div class="empty-note">Connect your wallet to check what\'s available.</div>'; return; }
+    listEl.innerHTML = '<div class="empty-note">Checking the chain for buyers…</div>';
+    try {
+      const total = Number(await contract.totalOffers());
+      const rows = [];
+      for (let id = total; id >= 1 && rows.length < 30; id--) {
+        const o = await contract.getOffer(id);
+        if (o.token.toLowerCase() !== NOCAP_TOKEN_ADDRESS.toLowerCase()) continue;
+        if (Number(o.status) !== 1) continue; // Open
+        if (!o.makerGivesNative) continue; // this is a sell-side offer, not relevant here
+        rows.push({ id, o });
+      }
+      rows.sort((a, b) => {
+        const pa = parseFloat(ethers.formatEther(a.o.amountNative)) / parseFloat(ethers.formatUnits(a.o.amountToken, tokenDecimals));
+        const pb = parseFloat(ethers.formatEther(b.o.amountNative)) / parseFloat(ethers.formatUnits(b.o.amountToken, tokenDecimals));
+        return pb - pa; // highest BDAG-per-NOCAP (best price for a seller) first
+      });
+      listEl.innerHTML = rows.length
+        ? rows.map(r => renderSimpleOfferCard(r.id, r.o, "sell")).join("")
+        : '<div class="empty-note">No buyers yet — post the first sell offer below.</div>';
+      attachSimpleOfferActions();
+    } catch (err) {
+      listEl.innerHTML = `<div class="empty-note">Could not load offers: ${friendlyError(err)}</div>`;
+    }
+  }
+
+  function renderSimpleOfferCard(id, o, mode) {
+    const nativeAmt = ethers.formatEther(o.amountNative);
+    const tokenAmt = ethers.formatUnits(o.amountToken, tokenDecimals);
+    const isMaker = o.maker.toLowerCase() === (userAddress || "").toLowerCase();
+    const isRestricted = o.taker !== ethers.ZeroAddress;
+    const isMineToTake = isRestricted && o.taker.toLowerCase() === (userAddress || "").toLowerCase();
+    const canAct = !isMaker && (!isRestricted || isMineToTake);
+
+    const line = mode === "buy"
+      ? `<span class="r">${nativeAmt} BDAG</span> → <span class="g">${tokenAmt} NOCAP</span>`
+      : `<span class="g">${tokenAmt} NOCAP</span> → <span class="r">${nativeAmt} BDAG</span>`;
+
+    let actionBtn = "";
+    if (isMaker) {
+      actionBtn = `<button class="btn btn-sm" data-action="cancel" data-id="${id}" style="background:transparent;border:1px solid var(--coral);color:var(--coral);">Your offer — Cancel</button>`;
+    } else if (canAct) {
+      const fillFn = mode === "buy" ? "fillGivingNative" : "fillGivingToken";
+      const label = mode === "buy" ? "Buy this" : "Sell to this";
+      actionBtn = `<button class="btn btn-sm" data-action="${fillFn}" data-id="${id}">${label}</button>`;
+    } else {
+      actionBtn = `<span class="meta-line">restricted to another address</span>`;
+    }
+
+    return `
+      <div class="offer-card-nocap ${mode === 'buy' ? 'sell' : 'buy'}">
+        <div class="buy-btn-row">
+          <div class="price-line">${line}</div>
+          ${actionBtn}
+        </div>
+        <div class="meta-line" style="margin-top:6px;">#${id} · maker ${o.maker.slice(0,6)}…${o.maker.slice(-4)}</div>
+        <div class="trade-status-msg" id="nocapOfferStatus-${id}"></div>
+      </div>`;
+  }
+
+  function attachSimpleOfferActions() {
+    document.querySelectorAll("#buyOffersList [data-action], #sellOffersList [data-action]").forEach(btn => {
+      btn.addEventListener("click", () => handleOfferAction(btn));
+    });
+  }
+
+  async function handleOfferAction(btn) {
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    const statusEl = document.getElementById(`nocapOfferStatus-${id}`);
+    btn.disabled = true;
+    try {
+      if (action === "cancel") {
+        statusEl.textContent = "Cancelling…";
+        const tx = await contract.cancelOffer(id);
+        await tx.wait();
+      } else if (action === "fillGivingToken") {
+        const o = await contract.getOffer(id);
+        const token = new ethers.Contract(NOCAP_TOKEN_ADDRESS, ERC20_ABI, signer);
+        statusEl.textContent = "Approving token spend…";
+        const allowance = await token.allowance(userAddress, CONTRACT_ADDRESS);
+        if (allowance < o.amountToken) {
+          const approveTx = await token.approve(CONTRACT_ADDRESS, o.amountToken);
+          await approveTx.wait();
+        }
+        statusEl.textContent = "Filling offer…";
+        const tx = await contract.fillOfferGivingToken(id);
+        await tx.wait();
+      } else if (action === "fillGivingNative") {
+        const o = await contract.getOffer(id);
+        statusEl.textContent = "Sending BDAG…";
+        const tx = await contract.fillOfferGivingNative(id, { value: o.amountNative });
+        await tx.wait();
+      }
+      statusEl.textContent = "Done."; statusEl.className = "trade-status-msg success";
+      refreshTradeStats(); reloadOfferLists(); loadNocapHistory();
+    } catch (err) {
+      statusEl.textContent = friendlyError(err); statusEl.className = "trade-status-msg error"; btn.disabled = false;
+    }
+  }
+
+  // ---- Real trade history, $NOCAP only — stays empty until real fills exist ----
+  async function loadNocapHistory() {
+    const barsEl = document.getElementById("tradeChartBars");
+    const volEl = document.getElementById("tradeVolTotal");
+    const priceEl = document.getElementById("tradeLastPrice");
+    if (!contract) { barsEl.innerHTML = '<div class="empty-note">Connect your wallet to check trade history.</div>'; return; }
+    barsEl.innerHTML = '<div class="empty-note">Reading fill history from the chain…</div>';
+    try {
+      const total = Number(await contract.totalOffers());
+      const trades = [];
+      for (let id = total; id >= 1 && trades.length < 15; id--) {
+        const o = await contract.getOffer(id);
+        if (o.token.toLowerCase() !== NOCAP_TOKEN_ADDRESS.toLowerCase()) continue;
+        if (Number(o.status) !== 2) continue; // 2 = Filled
+        trades.unshift({ id, amountNative: o.amountNative, amountToken: o.amountToken });
+      }
+      if (trades.length === 0) {
+        barsEl.innerHTML = '<div class="empty-note">No trades yet — the chart fills in once real trades happen.</div>';
+        volEl.textContent = ""; priceEl.textContent = "no trades yet";
+        return;
+      }
+      const prices = trades.map(t => parseFloat(ethers.formatEther(t.amountNative)) / parseFloat(ethers.formatUnits(t.amountToken, tokenDecimals)));
+      const maxP = Math.max(...prices);
+      barsEl.innerHTML = trades.map((t, i) => `
+        <div class="chart-bar-wrap-nocap">
+          <div class="chart-bar-nocap" style="height:${Math.max((prices[i]/maxP)*100, 3)}%"></div>
+          <div class="bar-label-nocap">#${t.id}</div>
+        </div>`).join("");
+      const lastPrice = prices[prices.length - 1];
+      let priceStr = lastPrice.toFixed(8) + " BDAG";
+      if (bdagUsdPrice) priceStr += " (~$" + (lastPrice * bdagUsdPrice).toFixed(8) + ")";
+      priceEl.textContent = priceStr;
+      const totalVol = trades.reduce((s, t) => s + parseFloat(ethers.formatEther(t.amountNative)), 0);
+      volEl.textContent = totalVol.toFixed(4) + " BDAG across last " + trades.length + " fills";
+    } catch (err) {
+      barsEl.innerHTML = `<div class="empty-note">Could not load history: ${friendlyError(err)}</div>`;
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
