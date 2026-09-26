@@ -646,12 +646,12 @@
         <div class="tp">
           <div class="dot"></div>
           <div class="tp-label">3-month cliff</div>
-          <div class="tp-sub">Nothing releasable before this point.</div>
+          <div class="tp-sub">~24.7% unlocks the instant the cliff lifts, nothing before.</div>
         </div>
         <div class="tp">
           <div class="dot"></div>
-          <div class="tp-label">15 months</div>
-          <div class="tp-sub">100% unlocked, linear from cliff.</div>
+          <div class="tp-label">12 months</div>
+          <div class="tp-sub">100% unlocked, linear from cliff to month 12.</div>
         </div>
       </div>
     </div>
@@ -672,7 +672,7 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752">Copy</button>
-          <a class="icon-btn" href="https://scan.welshdag.trade/address/0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752?tab=contract" target="_blank" rel="noopener">View source</a>
+          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
       <div class="contract-row">
@@ -682,13 +682,28 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1">Copy</button>
-          <a class="icon-btn" href="https://scan.welshdag.trade/address/0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1?tab=contract" target="_blank" rel="noopener">View source</a>
+          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
       <div class="contract-row">
         <div class="meta">
-          <div class="name">LP lock contract</div>
-          <div class="addr mono" style="color:var(--text-muted);">Pending — deploys once a DEX pool exists on BlockDAG</div>
+          <div class="name">Liquidity pool (NOCAP / WBDAG pair)</div>
+          <div class="addr mono">0x02C50110BDF1af6CFa54302bd6fBB6dD917fa046</div>
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn" data-copy="0x02C50110BDF1af6CFa54302bd6fBB6dD917fa046">Copy</button>
+          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x02C50110BDF1af6CFa54302bd6fBB6dD917fa046?tab=contract" target="_blank" rel="noopener">View source</a>
+        </div>
+      </div>
+      <div class="contract-row">
+        <div class="meta">
+          <div class="name">LP lock contract — NoCapLPLock.sol</div>
+          <div class="addr mono">0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1</div>
+          <div class="addr mono" style="color:var(--text-muted); margin-top:6px; font-size:12.5px;">100% of LP tokens locked until March 25, 2027 (180 days). No one — including us — can withdraw before then.</div>
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn" data-copy="0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1">Copy</button>
+          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
     </div>
@@ -822,7 +837,7 @@
       </div>
       <div class="sec-item">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <p>LP tokens will be locked — lock address & unlock date published when live</p>
+        <p>LP tokens locked until March 25, 2027 — lock contract public and verifiable above</p>
       </div>
     </div>
   </div>
@@ -929,13 +944,15 @@
   const CHAIN_ID_DEC = 1404;
   const CHAIN_ID_HEX = "0x57c";
   const NETWORK_NAME = "BlockDAG (Chain 1404)";
+  // Canonical community RPC first, per https://bdag.community/chain —
+  // do NOT use rpc.bdagscan.com (confirmed diverged fork, same chain ID,
+  // different history) or rpc.welshdag.trade (unverified third-party
+  // endpoint added to public chainlists without vetting).
   const RPC_URLS = [
-    "https://rpc.bdagexplorer.com",
-    "https://rpc.welshdag.trade",
-    "https://rpc.cms-mining-pool.net",
-    "https://rpc.dvdmining.com",
-    "https://rms-bdag-rpc.de/api/rpc-live",
+    "https://rpc.blockdag.engineering",
     "https://rpc.capedag.com",
+    "https://rpc.dvdmining.com",
+    "https://rpc.east.bdag-us.org",
     "https://rpc.west.bdag-us.org",
   ];
   const NATIVE_SYMBOL = "BDAG";
