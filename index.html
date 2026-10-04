@@ -583,7 +583,7 @@
   <div class="stats-row">
     <div class="stat"><div class="num">0%</div><div class="label">Presale</div></div>
     <div class="stat"><div class="num">0</div><div class="label">Mint function</div></div>
-    <div class="stat"><div class="num">100%</div><div class="label">Public wallets</div></div>
+    <div class="stat"><div class="num">92%</div><div class="label">Public liquidity</div></div>
     <div class="stat"><div class="num">1B</div><div class="label">Fixed total supply</div></div>
   </div>
 </div>
@@ -607,14 +607,14 @@
           <div class="swatch" style="background:#9B3FE0;"></div>
           <div>
             <h3>Public liquidity <span class="pct">92%</span></h3>
-            <p>Seeded directly into wallets earmarked for the liquidity pool. No presale, no early-buyer allocation.</p>
+            <p>Now in the NOCAP/BDAG pool on Reef, with 99.99% of the LP tokens locked until March 25, 2027. No presale, no early-buyer allocation.</p>
           </div>
         </div>
         <div class="alloc-item">
           <div class="swatch" style="background:#F2845C;"></div>
           <div>
             <h3>Dev / team <span class="pct">5%</span></h3>
-            <p>Held in a vesting contract — 3-month cliff, then a 12-month linear unlock. Can't be sold early, enforced by the contract itself.</p>
+            <p>Held in a vesting contract — 3-month cliff, then linear unlock to month 12. Can't be sold early, enforced by the contract itself.</p>
           </div>
         </div>
         <div class="alloc-item">
@@ -661,8 +661,8 @@
 <section id="contracts">
   <div class="wrap">
     <div class="section-head">
-      <h2>The contracts, live and verified</h2>
-      <p>Deployed on BlockDAG (chain 1404). Source code verified exact-match — read it yourself, don't take our word for it.</p>
+      <h2>The contracts, live on chain</h2>
+      <p>Deployed on BlockDAG (chain 1404). The token and vesting contracts are source-verified exact-match on the explorer, and the LP lock can be checked on chain — read it yourself, don't take our word for it.</p>
     </div>
     <div class="contracts">
       <div class="contract-row">
@@ -699,7 +699,7 @@
         <div class="meta">
           <div class="name">LP lock contract — NoCapLPLock.sol</div>
           <div class="addr mono">0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1</div>
-          <div class="addr mono" style="color:var(--text-muted); margin-top:6px; font-size:12.5px;">100% of LP tokens locked until March 25, 2027 (180 days). No one — including us — can withdraw before then.</div>
+          <div class="addr mono" style="color:var(--text-muted); margin-top:6px; font-size:12.5px;">99.99% of LP tokens locked until March 25, 2027 (180 days). No one — including us — can withdraw before then.</div>
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1">Copy</button>
@@ -714,7 +714,9 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Buy or sell $NOCAP</h2>
-      <p>This runs on Handshake — the same peer-to-peer escrow contract as <a href="https://otcescrow.pages.dev/" target="_blank" rel="noopener">otcescrow.pages.dev</a>, just with $NOCAP pre-filled. There's no automatic pricing curve: you post an offer at the price you choose, or fill someone else's. The chart below only ever shows real fills — it stays empty until real trades happen.</p>
+      <p>The easiest way to trade $NOCAP is a swap on <a href="https://reefdex.fyi" target="_blank" rel="noopener">Reef</a>, using the NOCAP/BDAG pool. That's where the public liquidity lives.</p>
+      <p><a class="btn" href="https://reefdex.fyi" target="_blank" rel="noopener">Swap on Reef</a></p>
+      <p>For a big trade, or one at a fixed price you choose, use Handshake below. It's the same peer-to-peer escrow contract as <a href="https://handshakeotc.fyi" target="_blank" rel="noopener">handshakeotc.fyi</a>, just with $NOCAP pre-filled: post an offer at your price, or fill someone else's. The chart below only shows real Handshake fills, so it stays empty until those trades happen.</p>
     </div>
 
     <div class="trade-banner">
@@ -833,11 +835,11 @@
       </div>
       <div class="sec-item">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <p>Contract source verified — exact match on the block explorer</p>
+        <p>Token and vesting contract source verified — exact match on the block explorer</p>
       </div>
       <div class="sec-item">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#4FCBE8"/><path d="M6 10.5l2.5 2.5L14 7" stroke="#0B0E17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <p>LP tokens locked until March 25, 2027 — lock contract public and verifiable above</p>
+        <p>99.99% of LP tokens locked until March 25, 2027 — the lock can be checked on chain using the address above</p>
       </div>
     </div>
   </div>
@@ -850,7 +852,7 @@
       <p>No — and we're not going to blur that line. Here's exactly what has and hasn't happened.</p>
     </div>
     <div class="audit-answer">
-      <p>Both contracts are <strong>source-verified</strong> on the block explorer — that confirms the deployed bytecode matches the published Solidity exactly. It's a transparency check: it proves the code shown is the code running, so you can read it yourself instead of trusting a description of it.</p>
+      <p>The token and vesting contracts are <strong>source-verified</strong> on the block explorer — that confirms the deployed bytecode matches the published Solidity exactly. It's a transparency check: it proves the code shown is the code running, so you can read it yourself instead of trusting a description of it.</p>
       <p>What it is not: a professional third-party security audit. We ran the contracts through Auditrace, an automated static-analysis tool — it flags known patterns, but it can't compile, execute, or guarantee full coverage. No Critical or High findings came back; the remaining Medium ones are noted and explained in the code comments themselves.</p>
       <p>$NOCAP is experimental software on an early-stage chain (BlockDAG, chain 1404). Treat any amount you put in as money you could lose entirely — only ever risk what you're fully comfortable losing.</p>
     </div>
