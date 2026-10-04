@@ -22,7 +22,17 @@
     --text-muted: #8B84A3;
     --border: #2A2444;
   }
-  :root:not([data-theme="light"]) { color-scheme: dark; }
+  :root { color-scheme: dark; }
+  /* Light theme follows the device's light/dark setting, like Reef, Nodal and Handshake. */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+      --bg: #F6F4FB; --surface: #FFFFFF; --surface-2: #EFEBF8;
+      --text: #17132A; --text-muted: #5E5878; --border: #DCD6EB;
+      --purple: #8A2FD6; --purple-dim: #C9A6EE;
+      --coral: #C9552E; --cyan: #0A7F9E;
+    }
+  }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0B0E17; --surface: #161129; --surface-2: #1D1736;
@@ -137,7 +147,41 @@
 
   @media (max-width: 640px) {
     nav.top { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .nav-right { flex-wrap: wrap; gap: 10px; }
+    .nav-right .nav-badge-hide-mobile { display: none; }
   }
+
+  /* ---- RPC status button + dialog (same pattern as Reef and Handshake) ---- */
+  .rpcbtn { display:inline-flex; align-items:center; gap:7px; font: 500 12px 'Inter', sans-serif; color: var(--text-muted);
+    padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border); background: transparent; cursor: pointer; white-space: nowrap; }
+  .rpcbtn:hover { color: var(--text); border-color: var(--purple); }
+  .rpcbtn .rpcdot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); }
+  .rpcbtn.up .rpcdot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .rpcbtn.warn .rpcdot { background: #e0a030; }
+  .rpcbtn.down .rpcdot { background: var(--coral); }
+  dialog.rpc-dialog { width: min(600px, 94vw); max-height: 86vh; padding: 22px 22px 20px; border: 1px solid var(--border); border-radius: 16px;
+    background: var(--surface); color: var(--text); box-shadow: 0 30px 80px rgba(0,0,0,.45); margin: auto; }
+  dialog.rpc-dialog::backdrop { background: rgba(4,8,16,.55); backdrop-filter: blur(3px); }
+  dialog.rpc-dialog h3 { font-size: 20px; }
+  .rpc-dialog .dhead { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .rpc-dialog .dclose { background: transparent; border: 0; color: var(--text-muted); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 4px; }
+  .rpc-dialog .dclose:hover { color: var(--text); }
+  .rpc-dialog .dnote { font-size: 12.5px; color: var(--text-muted); margin: 8px 0 12px; line-height: 1.6; }
+  .rpc-dialog .dnote a { color: inherit; text-decoration: underline; }
+  .rpc-status-list { display: flex; flex-direction: column; gap: 8px; }
+  .rpc-row { display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); }
+  .rpc-row .rpc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--text-muted); }
+  .rpc-row.up .rpc-dot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .rpc-row.down .rpc-dot { background: var(--coral); }
+  .rpc-row.checking .rpc-dot { background: var(--purple); animation: rpcPulse 1.2s ease-in-out infinite; }
+  .rpc-row .rpc-url { color: var(--text); flex: 1; word-break: break-all; }
+  .rpc-row .rpc-latency { color: var(--text-muted); font-size: 11px; white-space: nowrap; text-align: right; }
+  @keyframes rpcPulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+  #rpcDivergenceSummary { font-size: 12.5px; margin-bottom: 12px; }
+  #rpcDivergenceSummary.ok { color: var(--cyan); }
+  #rpcDivergenceSummary.warn { color: var(--coral); border: 1px solid var(--coral); border-radius: 6px; padding: 8px 10px; line-height: 1.6; }
+  @media (prefers-reduced-motion: reduce) { .rpc-row.checking .rpc-dot { animation: none; } }
 
   /* ---------- Hero ---------- */
   .hero { padding-top: 40px; padding-bottom: 80px; }
@@ -456,7 +500,7 @@
 
   /* ---------- ToS gate modal ---------- */
   .tos-gate-overlay {
-    position: fixed; inset: 0; z-index: 200; background: rgba(11,14,23,0.93);
+    position: fixed; inset: 0; z-index: 200; background: color-mix(in srgb, var(--bg) 93%, transparent);
     backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 20px;
   }
   .tos-gate-panel {
@@ -526,6 +570,7 @@
     <span class="wordmark">$NOCAP</span>
   </div>
   <div class="nav-right">
+    <button type="button" class="rpcbtn" id="rpcBadge" aria-haspopup="dialog" aria-controls="rpcDialog"><span class="rpcdot"></span>RPC status</button>
     <span class="badge nav-badge-hide-mobile">✓ Source verified</span>
     <a class="btn btn-ghost nav-badge-hide-mobile" href="#contracts">View contracts</a>
     <div class="nav-wallet">
@@ -748,7 +793,6 @@
     <div class="trade-stats">
       <div class="trade-stat"><div class="label">last price</div><div class="value" id="tradeLastPrice">—</div></div>
       <div class="trade-stat"><div class="label">open offers</div><div class="value" id="tradeOpenCount">—</div></div>
-      <div class="trade-stat"><div class="label">bdag / usd</div><div class="value" id="tradeBdagUsd">—</div></div>
       <div class="trade-stat"><div class="label">network</div><div class="value dim" id="tradeNetwork">—</div></div>
     </div>
 
@@ -882,6 +926,20 @@
   </div>
 </section>
 
+<dialog id="rpcDialog" class="rpc-dialog" aria-labelledby="rpcDialogTitle">
+  <div class="dhead">
+    <h3 id="rpcDialogTitle">RPC status</h3>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button type="button" id="rpcCheckBtn" class="btn btn-ghost btn-sm">Check now</button>
+      <button type="button" class="dclose" id="rpcClose" aria-label="Close">&times;</button>
+    </div>
+  </div>
+  <p class="dnote">The endpoint list comes from the community's <a href="https://bdag.community/chain#nodes" target="_blank" rel="noopener noreferrer">node board</a>, and each one is checked live from your own browser. It also checks whether the responding RPCs agree on a recent block, because chain 1404 has had operators serving different chain histories. That tells you whether these RPCs agree with each other, not which side (if any) is correct.</p>
+  <p id="rpcListSource" class="dnote" style="font-size:11.5px; margin-top:0;">Loading the endpoint list…</p>
+  <div id="rpcDivergenceSummary"></div>
+  <div id="rpcStatusList" class="rpc-status-list"></div>
+</dialog>
+
 <footer>
   <div class="wrap footer-row">
     <div>
@@ -972,16 +1030,20 @@
   const CHAIN_ID_DEC = 1404;
   const CHAIN_ID_HEX = "0x57c";
   const NETWORK_NAME = "BlockDAG (Chain 1404)";
-  // Canonical community RPC first, per https://bdag.community/chain —
-  // do NOT use rpc.bdagscan.com (confirmed diverged fork, same chain ID,
-  // different history) or rpc.welshdag.trade (unverified third-party
-  // endpoint added to public chainlists without vetting).
+  // Built-in list, used for the wallet's "add network" prompt and as the RPC status
+  // fallback. Same list as Handshake (last reviewed 1 Oct 2026). Never rpc.bdagscan.com
+  // (diverged fork, same chain ID) or rpc.welshdag.trade (unvetted).
   const RPC_URLS = [
     "https://rpc.blockdag.engineering",
     "https://rpc.capedag.com",
+    "https://rms-bdag-rpc.de/api/rpc-live",
     "https://rpc.dvdmining.com",
-    "https://rpc.east.bdag-us.org",
-    "https://rpc.west.bdag-us.org",
+    "https://rpc.cms-mining-pool.net",
+    "https://rpc.england.bdag-us.org",
+    "https://rpc.dagcore.net",
+    "https://rpc.escrowhubs.io",
+    "https://rpc.brazil.bdag-us.org",
+    "https://rpc.bdagexplorer.com",
   ];
   const NATIVE_SYMBOL = "BDAG";
 
@@ -1009,7 +1071,6 @@
 
   let provider, signer, userAddress, contract, tokenDecimals = 18;
   let direction = "buy"; // buy = give BDAG, want NOCAP | sell = give NOCAP, want BDAG
-  let bdagUsdPrice = null;
 
   function friendlyError(err) {
     const raw = err?.reason || err?.shortMessage || err?.message || String(err);
@@ -1128,19 +1189,8 @@
   document.getElementById("tradeConnectBtn").addEventListener("click", handleConnectClick);
   document.getElementById("navConnectBtn").addEventListener("click", handleConnectClick);
 
-  // ---- BDAG/USD, informational only, never used by the contract ----
-  async function loadBdagUsd() {
-    const el = document.getElementById("tradeBdagUsd");
-    try {
-      const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=blockdag&vs_currencies=usd");
-      const data = await res.json();
-      const price = data?.blockdag?.usd;
-      if (price === undefined) { el.textContent = "n/a"; return; }
-      bdagUsdPrice = price;
-      el.textContent = "$" + (price < 0.01 ? price.toFixed(8) : price.toFixed(4));
-    } catch (e) { el.textContent = "n/a"; }
-  }
-  loadBdagUsd();
+  // No dollar price is shown: the community chain's BDAG has no established outside market
+  // price, and CoinGecko's "blockdag" listing is BlockDAG Network's token, not this chain's.
 
   async function refreshTradeStats() {
     if (!contract) return;
@@ -1399,7 +1449,6 @@
         </div>`).join("");
       const lastPrice = prices[prices.length - 1];
       let priceStr = lastPrice.toFixed(8) + " BDAG";
-      if (bdagUsdPrice) priceStr += " (~$" + (lastPrice * bdagUsdPrice).toFixed(8) + ")";
       priceEl.textContent = priceStr;
       const totalVol = trades.reduce((s, t) => s + parseFloat(ethers.formatEther(t.amountNative)), 0);
       volEl.textContent = totalVol.toFixed(4) + " BDAG across last " + trades.length + " fills";
@@ -1410,5 +1459,109 @@
 })();
 </script>
 
+
+<script>
+// ---- RPC status: checks each chain 1404 endpoint live from this browser ----
+// Same endpoint source as Handshake: the community node board via Nodal's /api/rpcs,
+// with a built-in fallback list. Read-only JSON-RPC calls; nothing is signed or sent.
+(function() {
+  const RPC_LIST_URL = "https://www.nodaldex.fyi/api/rpcs";
+  const FALLBACK = ["https://rpc.blockdag.engineering","https://rpc.capedag.com","https://rms-bdag-rpc.de/api/rpc-live",
+    "https://rpc.dvdmining.com","https://rpc.cms-mining-pool.net","https://rpc.england.bdag-us.org","https://rpc.dagcore.net",
+    "https://rpc.escrowhubs.io","https://rpc.brazil.bdag-us.org","https://rpc.bdagexplorer.com"];
+  const SAFE = /^https:\/\/[a-z0-9.-]+(\/[A-Za-z0-9\/_-]*)?$/i;
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const label = u => u.replace(/^https?:\/\//, "");
+  const dialog = $("rpcDialog"), badge = $("rpcBadge");
+
+  function withTimeout(promise, ms) {
+    return Promise.race([promise, new Promise((_, r) => setTimeout(() => r(new Error("timeout")), ms))]);
+  }
+  async function rpc(url, method, params, ms) {
+    const res = await withTimeout(fetch(url, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) }), ms);
+    const j = await res.json();
+    if (j.error || j.result === undefined) throw new Error("bad response");
+    return j.result;
+  }
+  async function loadFeed() {
+    try {
+      const res = await withTimeout(fetch(RPC_LIST_URL, { headers: { accept: "application/json" } }), 5000);
+      if (!res.ok) return null;
+      const j = await res.json();
+      if (!j || !Array.isArray(j.rpcs)) return null;
+      return { rpcs: j.rpcs.filter(r => r && typeof r.url === "string" && SAFE.test(r.url)),
+               excluded: Array.isArray(j.excluded) ? j.excluded : [], checkedAt: j.checkedAt || null };
+    } catch (e) { return null; }
+  }
+  function setBadge(state, title) {
+    badge.classList.remove("up", "warn", "down");
+    if (state) badge.classList.add(state);
+    badge.title = title || "";
+  }
+
+  let running = false;
+  async function checkAll() {
+    if (running) return; running = true;
+    const btn = $("rpcCheckBtn"), list = $("rpcStatusList"), sum = $("rpcDivergenceSummary"), src = $("rpcListSource");
+    btn.disabled = true; btn.textContent = "Checking…"; sum.textContent = ""; sum.className = "";
+    const feed = await loadFeed();
+    const entries = feed ? feed.rpcs.map(r => ({ url: r.url, fs: r.status || null, blurb: r.blurb || "" }))
+                         : FALLBACK.map(url => ({ url, fs: null, blurb: "" }));
+    const at = feed && feed.checkedAt ? new Date(feed.checkedAt) : null;
+    src.textContent = (feed ? "Endpoint list: live from bdag.community" + (at && !isNaN(at) ? ` (checked ${at.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })})` : "") + "."
+                            : "Couldn't load the live endpoint list just now, so this shows the built-in list.")
+      + (feed && feed.excluded.length ? " Never used: " + feed.excluded.map(x => `${x.name} (${x.reason})`).join(", ") + "." : "");
+    list.innerHTML = entries.map(e => `<div class="rpc-row checking" data-url="${esc(e.url)}" title="${esc(e.blurb)}">
+      <span class="rpc-dot"></span><span class="rpc-url">${esc(label(e.url))}</span><span class="rpc-latency">checking…</span></div>`).join("");
+    const results = {};
+    await Promise.all(entries.map(async e => {
+      const row = list.querySelector(`.rpc-row[data-url="${CSS.escape(e.url)}"]`), lat = row.querySelector(".rpc-latency");
+      const t0 = performance.now();
+      try {
+        const bn = parseInt(await rpc(e.url, "eth_blockNumber", [], 6000), 16);
+        const ms = Math.round(performance.now() - t0);
+        results[e.url] = { ok: true, bn, fs: e.fs };
+        if (e.fs === "fork" || e.fs === "mismatch" || e.fs === "behind") {
+          row.className = "rpc-row down";
+          lat.textContent = e.fs === "fork" ? "different chain — not used" : e.fs === "behind" ? "behind the chain head" : "block hashes don't match";
+        } else { row.className = "rpc-row up"; lat.textContent = `${ms} ms`; }
+      } catch (err) {
+        results[e.url] = { ok: false };
+        row.className = "rpc-row down";
+        lat.textContent = e.fs === "ok" ? "online, but not from browsers" : e.fs === "offline" ? "offline" : "unreachable";
+      }
+    }));
+    const up = Object.keys(results).filter(u => results[u].ok && (results[u].fs == null || results[u].fs === "ok"));
+    let state = up.length ? "up" : "down", title = up.length ? `${up.length} RPC${up.length === 1 ? "" : "s"} online` : "No RPC reachable right now";
+    if (up.length >= 2) {
+      const ref = Math.min(...up.map(u => results[u].bn)) - 5;
+      if (ref > 0) {
+        sum.textContent = "Cross-checking block hashes across responsive RPCs…";
+        const settled = await Promise.allSettled(up.map(async u => ({ u, h: (await rpc(u, "eth_getBlockByNumber", ["0x" + ref.toString(16), false], 8000))?.hash })));
+        const hashes = settled.filter(x => x.status === "fulfilled" && x.value.h).map(x => x.value);
+        if (hashes.length < 2) { sum.textContent = "Could not complete the block-hash cross-check this time."; }
+        else if (new Set(hashes.map(x => x.h)).size === 1) {
+          sum.textContent = `✓ All ${hashes.length} responsive RPCs agree on block #${ref}'s hash.`; sum.className = "ok";
+        } else {
+          const g = {}; hashes.forEach(x => (g[x.h] = g[x.h] || []).push(label(x.u)));
+          sum.textContent = `⚠ These RPCs do NOT agree on block #${ref}, so they may be serving different chain histories: ` +
+            Object.entries(g).map(([h, us]) => `${us.join(", ")} → ${h.slice(0, 10)}…`).join(" | ");
+          sum.className = "warn"; state = "warn"; title = "RPCs disagree on recent blocks: open for details";
+        }
+      }
+    }
+    setBadge(state, title);
+    btn.disabled = false; btn.textContent = "Check now"; running = false;
+  }
+
+  badge.addEventListener("click", () => dialog.showModal());
+  $("rpcClose").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", e => { if (e.target === dialog) dialog.close(); });
+  $("rpcCheckBtn").addEventListener("click", checkAll);
+  checkAll();
+})();
+</script>
 </body>
 </html>
