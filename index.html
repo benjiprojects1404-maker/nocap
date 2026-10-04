@@ -339,6 +339,8 @@
   footer .links { display: flex; gap: 20px; font-size: 14px; }
   footer .links a { margin-right: 20px; }
   footer .links a:last-child { margin-right: 0; }
+  .footer-cols { display: flex; flex-direction: column; gap: 22px; }
+  .footer-label { color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
 
   .reveal-slash {
     stroke-dasharray: 210;
@@ -621,7 +623,7 @@
           <div class="swatch" style="background:#4FCBE8;"></div>
           <div>
             <h3>Marketing <span class="pct">3%</span></h3>
-            <p>Listings, giveaways, and community incentives. Wallet address is public.</p>
+            <p>Listings, giveaways, and community incentives. The wallet address is public: it's in the <a href="#contracts">contracts list</a>.</p>
           </div>
         </div>
       </div>
@@ -704,6 +706,17 @@
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1">Copy</button>
           <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1?tab=contract" target="_blank" rel="noopener">View source</a>
+        </div>
+      </div>
+      <div class="contract-row">
+        <div class="meta">
+          <div class="name">Marketing wallet (3%)</div>
+          <div class="addr mono">0x9E0a2178147972Ff9ACBa7F5F05e963E07047815</div>
+          <div class="addr mono" style="color:var(--text-muted); margin-top:6px; font-size:12.5px;">A regular wallet, not a contract. Started with 30,000,000 $NOCAP; every move it makes shows on the explorer.</div>
+        </div>
+        <div class="row-actions">
+          <button class="icon-btn" data-copy="0x9E0a2178147972Ff9ACBa7F5F05e963E07047815">Copy</button>
+          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x9E0a2178147972Ff9ACBa7F5F05e963E07047815" target="_blank" rel="noopener">View on explorer</a>
         </div>
       </div>
     </div>
@@ -804,9 +817,9 @@
       </div>
     </div>
 
-    <p id="trade-audit" class="audit-answer" style="margin-top:32px; font-size:13px;">
+    <div id="trade-audit" class="audit-answer" style="margin-top:32px;"><p style="font-size:13px;">
       <strong>Custody note:</strong> when you buy, sell, or post an offer, the asset changing hands is locked into Handshake's contract itself until it's filled or cancelled for a full refund. Neither this page nor its operators can access, move, or freeze assets inside an open offer — only the contract's own code releases them. It is still custody, held by code, for as long as an offer sits open. The contract has not had a third-party security audit — see <a href="#audit-note">our audit note</a> above. Not offered to persons in the United States or United Kingdom.
-    </p>
+    </p></div>
   </div>
 </section>
 
@@ -854,6 +867,7 @@
     <div class="audit-answer">
       <p>The token and vesting contracts are <strong>source-verified</strong> on the block explorer — that confirms the deployed bytecode matches the published Solidity exactly. It's a transparency check: it proves the code shown is the code running, so you can read it yourself instead of trusting a description of it.</p>
       <p>What it is not: a professional third-party security audit. We ran the contracts through Auditrace, an automated static-analysis tool — it flags known patterns, but it can't compile, execute, or guarantee full coverage. No Critical or High findings came back; the remaining Medium ones are noted and explained in the code comments themselves.</p>
+      <p>The NOCAP LP lock was also covered by an <a href="https://benjiprojects1404-services.pages.dev/security-review/" target="_blank" rel="noopener">AI-assisted security review</a> of the BlockDAG contracts we've built (Reef, Nodal, Handshake, COOKED and this lock). Its functions and settings match the published source, and on 2 October it held 99.99% of the NOCAP/BDAG pool's LP tokens, locked until 25 March 2027. That review is <strong>AI-assisted, not an independent audit</strong>, and it didn't cover the NOCAP token contract itself.</p>
       <p>$NOCAP is experimental software on an early-stage chain (BlockDAG, chain 1404). Treat any amount you put in as money you could lose entirely — only ever risk what you're fully comfortable losing.</p>
     </div>
   </div>
@@ -889,9 +903,21 @@
       <p class="disclaimer" style="margin-top:14px;">A memecoin on BlockDAG (chain 1404). Not financial advice. Memecoins are speculative and can go to zero — only ever put in what you can afford to lose.</p>
       <p class="disclaimer mono" style="margin-top:12px; font-size:11px; letter-spacing:0.01em;">$nocap · memecoin · beta software · not independently audited by a third-party firm · verify contract source before trading · not financial advice</p>
     </div>
-    <div class="links">
-      <a href="#contracts">Contracts</a>
-      <a href="#tokenomics">Tokenomics</a>
+    <div class="footer-cols">
+      <div class="links">
+        <a href="#contracts">Contracts</a>
+        <a href="#tokenomics">Tokenomics</a>
+      </div>
+      <div class="footer-more">
+        <p class="footer-label">Also on BlockDAG, same builder</p>
+        <div class="links">
+          <a href="https://reefdex.fyi" target="_blank" rel="noopener">Reef</a>
+          <a href="https://nodaldex.fyi" target="_blank" rel="noopener">Nodal</a>
+          <a href="https://handshakeotc.fyi" target="_blank" rel="noopener">Handshake</a>
+        </div>
+        <p class="footer-label" style="margin-top:16px;">Found a security issue?</p>
+        <p class="disclaimer">Email <a href="mailto:benjiprojects1404@gmail.com">benjiprojects1404@gmail.com</a> privately before posting it anywhere public.</p>
+      </div>
     </div>
   </div>
 </footer>
