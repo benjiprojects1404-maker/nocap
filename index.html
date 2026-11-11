@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>$NOCAP — No lies. No hype. No cap.</title>
+<meta name="description" content="$NOCAP is a memecoin on BlockDAG that won't make you rich: no presale, no mint function, 92% public liquidity, fixed 1B supply and a verified contract you can read yourself.">
+<link rel="canonical" href="https://www.nocapmeme.fyi/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.nocapmeme.fyi/">
+<meta property="og:title" content="$NOCAP: No lies. No hype. No cap.">
+<meta property="og:description" content="A memecoin on BlockDAG that won't make you rich. No presale, no mint, 92% public liquidity, verified contract.">
+<meta property="og:image" content="https://www.nocapmeme.fyi/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.nocapmeme.fyi/og-image.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -722,7 +732,7 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752">Copy</button>
-          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752?tab=contract" target="_blank" rel="noopener">View source</a>
+          <a class="icon-btn" href="https://explorer.east.bdag-us.org/address/0x17AEE3EEDA0d12E3A6a9A6078d028B88F9C91752?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
       <div class="contract-row">
@@ -732,7 +742,7 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1">Copy</button>
-          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1?tab=contract" target="_blank" rel="noopener">View source</a>
+          <a class="icon-btn" href="https://explorer.east.bdag-us.org/address/0x432eA11c05cF8aa673c6E312c074584a2DA0E6f1?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
       <div class="contract-row">
@@ -742,7 +752,7 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x02C50110BDF1af6CFa54302bd6fBB6dD917fa046">Copy</button>
-          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x02C50110BDF1af6CFa54302bd6fBB6dD917fa046?tab=contract" target="_blank" rel="noopener">View source</a>
+          <a class="icon-btn" href="https://explorer.east.bdag-us.org/address/0x02C50110BDF1af6CFa54302bd6fBB6dD917fa046?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
       <div class="contract-row">
@@ -753,7 +763,7 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1">Copy</button>
-          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1?tab=contract" target="_blank" rel="noopener">View source</a>
+          <a class="icon-btn" href="https://explorer.east.bdag-us.org/address/0x5520cC4E80E86E99c5A6A748C506d80f0d274bB1?tab=contract" target="_blank" rel="noopener">View source</a>
         </div>
       </div>
       <div class="contract-row">
@@ -764,7 +774,7 @@
         </div>
         <div class="row-actions">
           <button class="icon-btn" data-copy="0x9E0a2178147972Ff9ACBa7F5F05e963E07047815">Copy</button>
-          <a class="icon-btn" href="https://explorer.blockdag.engineering/address/0x9E0a2178147972Ff9ACBa7F5F05e963E07047815" target="_blank" rel="noopener">View on explorer</a>
+          <a class="icon-btn" href="https://explorer.east.bdag-us.org/address/0x9E0a2178147972Ff9ACBa7F5F05e963E07047815" target="_blank" rel="noopener">View on explorer</a>
         </div>
       </div>
     </div>
@@ -1034,10 +1044,10 @@
   const CHAIN_ID_HEX = "0x57c";
   const NETWORK_NAME = "BlockDAG (Chain 1404)";
   // Built-in list, used for the wallet's "add network" prompt and as the RPC status
-  // fallback. Same list as Handshake (last reviewed 1 Oct 2026). Never rpc.bdagscan.com
+  // fallback. Same list as Handshake (last reviewed 1 Oct 2026; rpc.blockdag.engineering, now offline, replaced by the community gateway 11 Nov 2026). Never rpc.bdagscan.com
   // (diverged fork, same chain ID) or rpc.welshdag.trade (unvetted).
   const RPC_URLS = [
-    "https://rpc.blockdag.engineering",
+    "https://rpc.community.bdag-us.org",
     "https://rpc.capedag.com",
     "https://rms-bdag-rpc.de/api/rpc-live",
     "https://rpc.dvdmining.com",
@@ -1469,7 +1479,7 @@
 // with a built-in fallback list. Read-only JSON-RPC calls; nothing is signed or sent.
 (function() {
   const RPC_LIST_URL = "https://www.nodaldex.fyi/api/rpcs";
-  const FALLBACK = ["https://rpc.blockdag.engineering","https://rpc.capedag.com","https://rms-bdag-rpc.de/api/rpc-live",
+  const FALLBACK = ["https://rpc.community.bdag-us.org","https://rpc.capedag.com","https://rms-bdag-rpc.de/api/rpc-live",
     "https://rpc.dvdmining.com","https://rpc.cms-mining-pool.net","https://rpc.england.bdag-us.org","https://rpc.dagcore.net",
     "https://rpc.escrowhubs.io","https://rpc.brazil.bdag-us.org","https://rpc.bdagexplorer.com"];
   const SAFE = /^https:\/\/[a-z0-9.-]+(\/[A-Za-z0-9\/_-]*)?$/i;
